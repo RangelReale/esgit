@@ -35,7 +35,7 @@ public:
 	/**
 	* Create a reference to an existing \a signature; ownership of the pointer is not transferred.
 	*/
-	explicit Signature(const git_signature *signature = 0);
+	explicit Signature(const git_signature *signature);
 
 	~Signature();
 

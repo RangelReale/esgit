@@ -21,12 +21,14 @@ public:
 	* this Commit, and must not be passed to another Commit or closed outside this
 	* object.
 	*/
-	explicit Commit(git_commit *commit = 0);
+	explicit Commit(git_commit *commit);
 
 	/**
 	* Destroys the object.
 	*/
 	~Commit();
+
+	static Commit::Ptr fromObject(Object::Ptr object);
 
 	/**
 	* Get the id of a commit.

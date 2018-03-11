@@ -8,6 +8,8 @@ add_library(esgit STATIC
   Object.cpp
   Repository.cpp
   Commit.cpp
+  Tree.cpp
+  TreeEntry.cpp
   Signature.cpp
   RevWalk.cpp
   Util.cpp
@@ -20,6 +22,8 @@ add_library(esgit STATIC
   ${INC_DIR}/esgit/Object.h
   ${INC_DIR}/esgit/Repository.h
   ${INC_DIR}/esgit/Commit.h
+  ${INC_DIR}/esgit/Tree.h
+  ${INC_DIR}/esgit/TreeEntry.h
   ${INC_DIR}/esgit/Signature.h
   ${INC_DIR}/esgit/RevWalk.h
   ${INC_DIR}/esgit/Util.h

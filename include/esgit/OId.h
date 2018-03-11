@@ -12,7 +12,7 @@ class OId
 public:
 	typedef std::shared_ptr<OId> Ptr;
 
-	explicit OId(const git_oid *oid = 0, int len = -1);
+	explicit OId(const git_oid *oid, int len = -1);
 
 	~OId();
 

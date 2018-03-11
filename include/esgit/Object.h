@@ -21,7 +21,7 @@ public:
 		TagType
 	};
 
-	explicit Object(git_object *object = 0);
+	explicit Object(git_object *object);
 	~Object();
 
 	Type type() const;
@@ -78,12 +78,11 @@ public:
 	*/
 	std::string typeString() const;
 
-	//Repository::Ptr owner() const;
+	static Type resolveType(git_otype);
 
 	git_object* data() const;
 	const git_object* constData() const;
 private:
-	static Type resolveType(git_otype);
 
 	class Private;
 	std::unique_ptr<Private> _pimpl;

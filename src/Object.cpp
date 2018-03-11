@@ -61,15 +61,6 @@ Object::Type Object::resolveType(git_otype rawType)
 }
 
 /*
-Commit Object::toCommit() const
-{
-    Commit commit;
-    if (isCommit()) {
-        commit.d = d;
-    }
-    return commit;
-}
-
 Tag Object::toTag() const
 {
     Tag tag;
@@ -78,16 +69,9 @@ Tag Object::toTag() const
     }
     return tag;
 }
+*/
 
-Tree Object::toTree() const
-{
-    Tree tree;
-    if (isTree()) {
-        tree.d = d;
-    }
-    return tree;
-}
-
+/*
 Blob Object::toBlob() const
 {
     Blob blob;
@@ -132,13 +116,6 @@ std::string Object::typeString() const
 {
     return std::string(git_object_type2string(git_object_type(_pimpl->p)));
 }
-
-/*
-Repository::Ptr Object::owner() const
-{
-    return Repository::Ptr(new Repository(git_object_owner(_pimpl->p)));
-}
-*/
 
 git_object* Object::data() const
 {

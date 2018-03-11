@@ -16,7 +16,7 @@ class Repository
 public:
 	typedef std::shared_ptr<Repository> Ptr;
 
-	explicit Repository(git_repository *repository = nullptr, bool own = false);
+	explicit Repository(git_repository *repository, bool own = false);
 	~Repository();
 
 	static Repository::Ptr open(const std::string &path);

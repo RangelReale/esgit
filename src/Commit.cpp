@@ -12,6 +12,15 @@ Commit::~Commit()
 {
 }
 
+Commit::Ptr Commit::fromObject(Object::Ptr object)
+{
+	Commit::Ptr commit;
+	if (object->isCommit()) {
+		commit.reset(new Commit(reinterpret_cast<git_commit*>(object->data())));
+	}
+	return commit;
+}
+
 OId::Ptr Commit::oid() const
 {
     return OId::Ptr(new OId(git_commit_id(data())));
