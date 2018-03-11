@@ -49,12 +49,22 @@ bool OId::isValid() const
 	return _pimpl->p != nullptr;
 }
 
+OId::Ptr OId::create(const git_oid *oid, int len)
+{
+	OId::Ptr ret;
+	if (oid != nullptr && !git_oid_iszero(oid))
+	{
+		ret.reset(new OId(oid, len));
+	}
+	return ret;
+}
+
 OId::Ptr OId::fromHex(const std::string& hex)
 {
     int len = std::min(hex.size(), static_cast<size_t>(GIT_OID_HEXSZ));
 	git_oid oid;
     esGitThrow(git_oid_fromstrn(&oid, hex.c_str(), len));    
-	return OId::Ptr(new OId(&oid, len));
+	return OId::create(&oid, len);
 }
 
 OId::Ptr OId::fromString(const std::string &string)
@@ -67,7 +77,7 @@ OId::Ptr OId::fromRawData(const std::string& raw)
 	esGitThrow(raw.size() < GIT_OID_HEXSZ);
 	git_oid oid;
 	git_oid_cpy(&oid, reinterpret_cast<const git_oid*>(raw.c_str()));
-	return OId::Ptr(new OId(&oid, GIT_OID_HEXSZ));
+	return OId::create(&oid, GIT_OID_HEXSZ);
 }
 
 std::string OId::format() const

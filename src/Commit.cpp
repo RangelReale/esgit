@@ -25,7 +25,7 @@ Commit::Ptr Commit::fromObject(Object::Ptr object)
 
 OId::Ptr Commit::oid() const
 {
-    return OId::Ptr(new OId(git_commit_id(data())));
+    return OId::create(git_commit_id(data()));
 }
 
 std::string Commit::message() const
@@ -80,7 +80,7 @@ Commit::Ptr Commit::parent(unsigned n) const
 
 OId::Ptr Commit::parentId(unsigned n) const
 {
-    return OId::Ptr(new OId(git_commit_parent_id(data(), n)));
+    return OId::create(git_commit_parent_id(data(), n));
 }
 
 /*

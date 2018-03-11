@@ -1,6 +1,7 @@
 #pragma once
 
 #include <esgit/Commit.h>
+#include <esgit/Diff.h>
 #include <esgit/RevWalk.h>
 
 #include <git2.h>
@@ -42,7 +43,14 @@ public:
 
 	std::string workDirPath() const;
 
+
+	Diff::Ptr diffTrees(Tree::Ptr oldTree, Tree::Ptr newTree) const;
+
+
 	Commit::Ptr lookupCommit(OId::Ptr oid) const;
+
+	Object::Ptr lookupAny(OId::Ptr oid) const;
+
 
 	RevWalk::Ptr revWalk();
 

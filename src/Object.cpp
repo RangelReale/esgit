@@ -78,7 +78,7 @@ bool Object::isNull() const
 
 OId::Ptr Object::oid() const
 {
-    return OId::Ptr(new OId(git_object_id(_pimpl->p)));
+    return OId::create(git_object_id(_pimpl->p));
 }
 
 bool Object::isCommit() const

@@ -11,6 +11,7 @@ int main(int argc, char *argv)
 		auto repo = esgit::Repository::open("M:\\prog\\src\\OpenXcom");
 
 		auto revwalk = repo->revWalk();
+		revwalk->setSorting(esgit::RevWalk::Time | esgit::RevWalk::Reverse);
 		revwalk->pushHead();
 
 		esgit::Commit::Ptr walk = revwalk->nextCommit();
@@ -35,6 +36,39 @@ int main(int argc, char *argv)
 
 			if (ct == 2)
 			{
+				esgit::Diff::Ptr diff = repo->diffTrees(walk->parent(0)->tree(), walk->tree());
+
+				for (int i = 0; i < diff->numDeltas(); i++)
+				{
+					esgit::DiffDelta::Ptr delta = diff->delta(i);
+
+					std::cout << "DIFF DELTA: " << delta->newFile()->path() << std::endl;
+
+					esgit::Object::Ptr deltaobj = repo->lookupAny(delta->newFile()->oid());
+					if (deltaobj)
+					{
+						switch (deltaobj->type())
+						{
+						case esgit::Object::BlobType:
+						{
+							std::cout << "* FILE: " << std::endl;
+
+							auto blob = esgit::Blob::fromObject(deltaobj);
+							std::cout << blob->content();
+							break;
+						}
+						case esgit::Object::TreeType:
+							std::cout << "* TREE: " << std::endl;
+							break;
+						default:
+							std::cout << "* OTHER: " << deltaobj->type() << std::endl;
+							break;
+						}
+					}
+				}
+
+
+				/*
 				esgit::Tree::Ptr tree = walk->tree();
 				for (int i = 0; i < tree->entryCount(); ++i)
 				{
@@ -58,6 +92,7 @@ int main(int argc, char *argv)
 						break;
 					}
 				}
+				*/
 			}
 
 			ct++;

@@ -108,11 +108,35 @@ std::string Repository::workDirPath() const
 	return std::string(git_repository_workdir(_pimpl->p));
 }
 
+Diff::Ptr Repository::diffTrees(Tree::Ptr oldTree, Tree::Ptr newTree) const
+{
+	git_diff *diff = NULL;
+	esGitThrow(git_diff_tree_to_tree(&diff, _pimpl->p, oldTree->data(), newTree->data(), NULL));
+	return Diff::Ptr(new Diff(diff));
+}
+
 Commit::Ptr Repository::lookupCommit(OId::Ptr oid) const
 {
-	git_commit *commit = 0;
-	esGitThrow(git_commit_lookup_prefix(&commit, _pimpl->p, oid->constData(), oid->length()));
-	return Commit::Ptr(new Commit(commit));
+	Commit::Ptr ret;
+	if (oid)
+	{
+		git_commit *commit = 0;
+		esGitThrow(git_commit_lookup_prefix(&commit, _pimpl->p, oid->constData(), oid->length()));
+		ret.reset(new Commit(commit));
+	}
+	return ret;
+}
+
+Object::Ptr Repository::lookupAny(OId::Ptr oid) const
+{
+	Object::Ptr ret;
+	if (oid)
+	{
+		git_object *object = 0;
+		esGitThrow(git_object_lookup_prefix(&object, _pimpl->p, oid->constData(), oid->length(), GIT_OBJ_ANY));
+		ret.reset(new Object(object));
+	}
+	return ret;
 }
 
 RevWalk::Ptr Repository::revWalk()

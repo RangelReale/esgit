@@ -16,6 +16,8 @@ public:
 
 	~OId();
 
+	static OId::Ptr create(const git_oid *oid, int len = -1);
+
 	static OId::Ptr fromHex(const std::string& hex);
 
 	static OId::Ptr fromString(const std::string& string);

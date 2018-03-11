@@ -25,7 +25,7 @@ Tree::Ptr Tree::fromObject(Object::Ptr object)
 
 OId::Ptr Tree::oid()
 {
-    return OId::Ptr(new OId(git_tree_id(data())));
+    return OId::create(git_tree_id(data()));
 }
 
 size_t Tree::entryCount()

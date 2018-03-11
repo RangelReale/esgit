@@ -46,7 +46,7 @@ const std::string TreeEntry::name() const
 
 OId::Ptr TreeEntry::oid() const
 {
-    return OId::Ptr(new OId(git_tree_entry_id(_pimpl->p)));
+    return OId::create(git_tree_entry_id(_pimpl->p));
 }
 
 Object::Type TreeEntry::type() const

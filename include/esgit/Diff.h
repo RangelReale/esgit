@@ -36,6 +36,8 @@ public:
      */
     DiffDelta::Ptr delta(size_t index) const;
 
+	git_diff* data() const;
+	const git_diff* constData() const;
 public:
 	class Private;
 	std::unique_ptr<Private> _pimpl;

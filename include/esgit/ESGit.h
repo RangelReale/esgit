@@ -12,4 +12,7 @@
 #include "Signature.h"
 #include "Blob.h"
 #include "RevWalk.h"
+#include "Diff.h"
+#include "DiffDelta.h"
+#include "DiffFile.h"
 #include "Util.h"

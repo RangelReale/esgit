@@ -39,4 +39,15 @@ DiffDelta::Ptr Diff::delta(size_t index) const
 	return DiffDelta::Ptr(new DiffDelta(git_diff_get_delta(_pimpl->p, index)));
 }
 
+git_diff *Diff::data() const
+{
+	return _pimpl->p;
+}
+
+const git_diff *Diff::constData() const
+{
+	return _pimpl->p;
+}
+
+
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <esgit/OId.h>
+
 #include <git2.h>
 
 #include <string>
@@ -26,6 +28,11 @@ public:
      * Returns the path of the file if it is known. Otherwise returns an empty string.
      */
     std::string path() const;
+
+	OId::Ptr oid() const;
+
+	git_diff_file* data() const;
+	const git_diff_file* constData() const;
 private:
 	class Private;
 	std::unique_ptr<Private> _pimpl;

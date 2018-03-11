@@ -52,6 +52,9 @@ public:
      * Returns the information of the file on the "new" side of the diff.
      */
     DiffFile::Ptr newFile() const;
+
+	git_diff_delta* data() const;
+	const git_diff_delta* constData() const;
 private:
 	class Private;
 	std::unique_ptr<Private> _pimpl;

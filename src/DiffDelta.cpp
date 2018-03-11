@@ -39,4 +39,15 @@ DiffFile::Ptr DiffDelta::newFile() const
 	return DiffFile::Ptr(new DiffFile(&_pimpl->p->new_file));
 }
 
+git_diff_delta *DiffDelta::data() const
+{
+	return _pimpl->p;
+}
+
+const git_diff_delta *DiffDelta::constData() const
+{
+	return _pimpl->p;
+}
+
+
 }

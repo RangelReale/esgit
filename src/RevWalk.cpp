@@ -62,7 +62,7 @@ OId::Ptr RevWalk::next() const
     int err = git_revwalk_next(&oid, _pimpl->p);
 	if (err == GIT_OK)
 	{
-		return OId::Ptr(new OId(&oid));
+		return OId::create(&oid);
 	}
 	return OId::Ptr();
 }
