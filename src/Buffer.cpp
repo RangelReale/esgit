@@ -2,31 +2,52 @@
 
 namespace esgit {
 
-Buffer::Buffer()
+class Buffer::Private
 {
-	git_buf temp = GIT_BUF_INIT_CONST(0, 0);
-	d = temp;
+public:
+	Private(git_buf *buf) :
+		p(buf)
+	{
+		if (p == nullptr) {
+			p = static_cast<git_buf*>(malloc(sizeof(git_buf)));
+			p->ptr = nullptr;
+			p->size = 0;
+			p->asize = 0;
+		}
+	}
+
+	~Private()
+	{
+		git_buf_free(p);
+	}
+
+	git_buf *p;
+};
+
+
+Buffer::Buffer() :
+	_pimpl(new Private(nullptr))
+{
 }
 
-Buffer::Buffer(git_buf buf) : 
-	d(buf)
+Buffer::Buffer(git_buf *buf) : 
+	_pimpl(new Private(buf))
 {
 
 }
 
 Buffer::~Buffer()
 {
-	git_buf_free(&d);
 }
 
-std::string Buffer::asPath() const
+std::string Buffer::asString() const
 {
-	return std::string(d.ptr);
+	return std::string(_pimpl->p->ptr, _pimpl->p->size);
 }
 
 git_buf* Buffer::data()
 {
-	return &d;
+	return _pimpl->p;
 }
 
 }

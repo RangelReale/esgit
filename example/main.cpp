@@ -38,6 +38,10 @@ int main(int argc, char *argv)
 			{
 				esgit::Diff::Ptr diff = repo->diffTrees(walk->parent(0)->tree(), walk->tree());
 
+
+				std::cout << "DIFF:" << std::endl;
+				std::cout << diff->format(esgit::Diff::Patch)->asString() << std::endl;
+
 				for (int i = 0; i < diff->numDeltas(); i++)
 				{
 					esgit::DiffDelta::Ptr delta = diff->delta(i);
@@ -53,8 +57,8 @@ int main(int argc, char *argv)
 						{
 							std::cout << "* FILE: " << std::endl;
 
-							auto blob = esgit::Blob::fromObject(deltaobj);
-							std::cout << blob->content();
+							//auto blob = esgit::Blob::fromObject(deltaobj);
+							//std::cout << blob->content();
 							break;
 						}
 						case esgit::Object::TreeType:

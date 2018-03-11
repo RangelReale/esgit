@@ -1,4 +1,5 @@
 #include "esgit/Diff.h"
+#include "esgit/Exception.h"
 
 namespace esgit {
 
@@ -37,6 +38,13 @@ size_t Diff::numDeltas() const
 DiffDelta::Ptr Diff::delta(size_t index) const
 {
 	return DiffDelta::Ptr(new DiffDelta(git_diff_get_delta(_pimpl->p, index)));
+}
+
+Buffer::Ptr Diff::format(Format fmt)
+{
+	Buffer::Ptr buf(new Buffer);
+	esGitThrow(git_diff_to_buf(buf->data(), _pimpl->p, git_diff_format_t(fmt)));
+	return buf;
 }
 
 git_diff *Diff::data() const

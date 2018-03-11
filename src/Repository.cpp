@@ -68,7 +68,7 @@ std::string Repository::discover(const std::string& startPath,
 	Buffer repoPath;
 	std::string joinedCeilingDirs = Util::join(ceilingDirs, std::string(1, GIT_PATH_LIST_SEPARATOR));
 	esGitThrow(git_repository_discover(repoPath.data(), startPath.c_str(), acrossFs, joinedCeilingDirs.c_str()));
-	return repoPath.asPath();
+	return repoPath.asString();
 }
 
 Repository::Ptr Repository::discoverAndOpen(const std::string &startPath,

@@ -2,6 +2,7 @@
 
 #include <git2.h>
 
+#include <memory>
 #include <string>
 
 namespace esgit {
@@ -9,16 +10,20 @@ namespace esgit {
 class Buffer
 {
 public:
+	typedef std::shared_ptr<Buffer> Ptr;
+
 	Buffer();
-	explicit Buffer(git_buf buf);
+	explicit Buffer(git_buf *buf);
 	~Buffer();
 
-	std::string asPath() const;
+	std::string asString() const;
 
 	git_buf* data();
 private:
-	git_buf d;
+	class Private;
+	std::unique_ptr<Private> _pimpl;
 
+	git_buf d;
 };
 
 }
