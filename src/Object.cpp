@@ -71,17 +71,6 @@ Tag Object::toTag() const
 }
 */
 
-/*
-Blob Object::toBlob() const
-{
-    Blob blob;
-    if (isBlob()) {
-        blob.d = d;
-    }
-    return blob;
-}
-*/
-
 bool Object::isNull() const
 {
     return _pimpl->p == nullptr;

@@ -10,6 +10,7 @@ add_library(esgit STATIC
   Commit.cpp
   Tree.cpp
   TreeEntry.cpp
+  Blob.cpp
   Signature.cpp
   RevWalk.cpp
   Util.cpp
@@ -24,6 +25,7 @@ add_library(esgit STATIC
   ${INC_DIR}/esgit/Commit.h
   ${INC_DIR}/esgit/Tree.h
   ${INC_DIR}/esgit/TreeEntry.h
+  ${INC_DIR}/esgit/Blob.h
   ${INC_DIR}/esgit/Signature.h
   ${INC_DIR}/esgit/RevWalk.h
   ${INC_DIR}/esgit/Util.h

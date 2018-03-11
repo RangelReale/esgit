@@ -16,7 +16,9 @@ Commit::Ptr Commit::fromObject(Object::Ptr object)
 {
 	Commit::Ptr commit;
 	if (object->isCommit()) {
-		commit.reset(new Commit(reinterpret_cast<git_commit*>(object->data())));
+		git_object *copy;
+		esGitThrow(git_object_dup(&copy, object->data()));
+		commit.reset(new Commit(reinterpret_cast<git_commit*>(copy)));
 	}
 	return commit;
 }

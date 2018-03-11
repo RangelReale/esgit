@@ -1,4 +1,5 @@
 #include "esgit/Tree.h"
+#include "esgit/Exception.h"
 
 namespace esgit {
 
@@ -15,7 +16,9 @@ Tree::Ptr Tree::fromObject(Object::Ptr object)
 {
 	Tree::Ptr tree;
 	if (object->isTree()) {
-		tree.reset(new Tree(reinterpret_cast<git_tree*>(object->data())));
+		git_object *copy;
+		esGitThrow(git_object_dup(&copy, object->data()));
+		tree.reset(new Tree(reinterpret_cast<git_tree*>(copy)));
 	}
 	return tree;
 }
