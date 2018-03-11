@@ -6,8 +6,8 @@ namespace esgit {
 class TreeEntry::Private
 {
 public:
-	Private(git_tree *tree, const git_tree_entry *te) :
-		tree(tree), p(const_cast<git_tree_entry*>(te))
+	Private(git_tree *tree, const git_tree_entry *treeEntry, bool own) :
+		tree(tree), p(const_cast<git_tree_entry*>(treeEntry)), own(own)
 	{
 
 
@@ -15,16 +15,18 @@ public:
 
 	~Private()
 	{
-		git_tree_entry_free(p);
+		if (own)
+			git_tree_entry_free(p);
 	}
 
 	git_tree *tree;
 	git_tree_entry *p;
+	bool own;
 };
 
 
-TreeEntry::TreeEntry(git_tree *tree, const git_tree_entry* treeEntry)
-	: _pimpl(new Private(tree, treeEntry))
+TreeEntry::TreeEntry(git_tree *tree, const git_tree_entry* treeEntry, bool own)
+	: _pimpl(new Private(tree, treeEntry, own))
 {
 }
 
@@ -52,7 +54,7 @@ Object::Type TreeEntry::type() const
     return Object::resolveType(git_tree_entry_type(_pimpl->p));
 }
 
-Object::Ptr TreeEntry::toObject()
+Object::Ptr TreeEntry::object()
 {
     git_object *obj;
     esGitThrow(git_tree_entry_to_object(&obj, git_tree_owner(_pimpl->tree), _pimpl->p));

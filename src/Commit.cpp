@@ -59,14 +59,12 @@ Signature::Ptr Commit::author() const
     return Signature::Ptr(new Signature(git_commit_author(data())));
 }
 
-/*
-Tree Commit::tree() const
+Tree::Ptr Commit::tree() const
 {
     git_tree *tree;
-    qGitThrow(git_commit_tree(&tree, data()));
-    return Tree(tree);
+    esGitThrow(git_commit_tree(&tree, data()));
+    return Tree::Ptr(new Tree(tree));
 }
-*/
 
 unsigned int Commit::parentCount() const
 {

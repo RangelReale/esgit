@@ -22,7 +22,7 @@ class TreeEntry
 public:
 	typedef std::shared_ptr<TreeEntry> Ptr;
 
-	explicit TreeEntry(git_tree *tree, const git_tree_entry* treeEntry);
+	explicit TreeEntry(git_tree *tree, const git_tree_entry* treeEntry, bool own = false);
 	~TreeEntry();
 
 	/**
@@ -56,7 +56,7 @@ public:
 	* @return a reference to the pointed object in the repository
 	* @throws LibQGit2::Exception
 	*/
-	Object::Ptr toObject();
+	Object::Ptr object();
 
 	const git_tree_entry* data() const;
 private:

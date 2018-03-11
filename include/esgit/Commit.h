@@ -3,6 +3,7 @@
 #include "esgit/Object.h"
 #include "esgit/OId.h"
 #include "esgit/Signature.h"
+#include "esgit/Tree.h"
 
 #include "git2.h"
 
@@ -84,7 +85,7 @@ public:
 	*
 	* @throws Exception
 	*/
-	//Tree tree() const;
+	Tree::Ptr tree() const;
 
 	/**
 	* Get the number of parents of this commit
