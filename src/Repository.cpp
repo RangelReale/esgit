@@ -108,6 +108,13 @@ std::string Repository::workDirPath() const
 	return std::string(git_repository_workdir(_pimpl->p));
 }
 
+RevWalk::Ptr Repository::revWalk()
+{
+	git_revwalk *revwalk = nullptr;
+	esGitThrow(git_revwalk_new(&revwalk, _pimpl->p));
+	return RevWalk::Ptr(new RevWalk(revwalk));
+}
+
 git_repository *Repository::data()
 {
 	return _pimpl->p;

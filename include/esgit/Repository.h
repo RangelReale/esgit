@@ -1,5 +1,7 @@
 #pragma once
 
+#include <esgit/RevWalk.h>
+
 #include <git2.h>
 
 #include <memory>
@@ -38,6 +40,8 @@ public:
 	std::string path() const;
 
 	std::string workDirPath() const;
+
+	RevWalk::Ptr revWalk();
 
 	git_repository *data();
 	const git_repository *constData();

@@ -7,6 +7,7 @@ add_library(esgit STATIC
   OId.cpp
   Object.cpp
   Repository.cpp
+  RevWalk.cpp
   Util.cpp
 
   ${INC_DIR}/esgit/ESGit.h
@@ -16,5 +17,6 @@ add_library(esgit STATIC
   ${INC_DIR}/esgit/OId.h
   ${INC_DIR}/esgit/Object.h
   ${INC_DIR}/esgit/Repository.h
+  ${INC_DIR}/esgit/RevWalk.h
   ${INC_DIR}/esgit/Util.h
 )
