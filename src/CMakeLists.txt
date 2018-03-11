@@ -13,6 +13,9 @@ add_library(esgit STATIC
   Blob.cpp
   Signature.cpp
   RevWalk.cpp
+  Diff.cpp
+  DiffDelta.cpp
+  DiffFile.cpp
   Util.cpp
 
   ${INC_DIR}/esgit/ESGit.h
@@ -28,5 +31,8 @@ add_library(esgit STATIC
   ${INC_DIR}/esgit/Blob.h
   ${INC_DIR}/esgit/Signature.h
   ${INC_DIR}/esgit/RevWalk.h
+  ${INC_DIR}/esgit/Diff.h
+  ${INC_DIR}/esgit/DiffDelta.h
+  ${INC_DIR}/esgit/DiffFile.h
   ${INC_DIR}/esgit/Util.h
 )
