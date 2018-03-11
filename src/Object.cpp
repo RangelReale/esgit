@@ -133,10 +133,12 @@ std::string Object::typeString() const
     return std::string(git_object_type2string(git_object_type(_pimpl->p)));
 }
 
+/*
 Repository::Ptr Object::owner() const
 {
     return Repository::Ptr(new Repository(git_object_owner(_pimpl->p)));
 }
+*/
 
 git_object* Object::data() const
 {

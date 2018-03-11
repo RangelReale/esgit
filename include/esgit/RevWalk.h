@@ -2,6 +2,7 @@
 
 #include <esgit/Oid.h>
 #include <esgit/Exception.h>
+#include <esgit/Commit.h>
 
 #include <git2.h>
 
@@ -39,6 +40,7 @@ public:
 	void hideHead() const;
 
 	OId::Ptr next() const;
+	Commit::Ptr nextCommit();
 
 	void setSorting(SortModes sortMode);
 

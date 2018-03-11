@@ -1,5 +1,6 @@
 #pragma once
 
+#include <esgit/Commit.h>
 #include <esgit/RevWalk.h>
 
 #include <git2.h>
@@ -40,6 +41,8 @@ public:
 	std::string path() const;
 
 	std::string workDirPath() const;
+
+	Commit::Ptr lookupCommit(OId::Ptr oid) const;
 
 	RevWalk::Ptr revWalk();
 

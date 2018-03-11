@@ -1,4 +1,5 @@
 #include "esgit/RevWalk.h"
+#include "esgit/Repository.h"
 
 namespace esgit {
 
@@ -6,8 +7,9 @@ class RevWalk::Private
 {
 public:
 	Private(git_revwalk *revwalk) :
-		p(revwalk)
+		p(revwalk), repository(new Repository(git_revwalk_repository(revwalk), false))
 	{
+		
 	}
 
 	~Private()
@@ -16,6 +18,7 @@ public:
 	}
 
 	git_revwalk* p;
+	Repository::Ptr repository;
 };
 
 RevWalk::RevWalk(git_revwalk *revwalk) :
@@ -62,6 +65,16 @@ OId::Ptr RevWalk::next() const
 		return OId::Ptr(new OId(&oid));
 	}
 	return OId::Ptr();
+}
+
+Commit::Ptr RevWalk::nextCommit()
+{
+	auto oid = next();
+	if (oid)
+	{
+		return _pimpl->repository->lookupCommit(oid);
+	}
+	return Commit::Ptr();
 }
 
 void RevWalk::setSorting(SortModes sm)

@@ -108,6 +108,13 @@ std::string Repository::workDirPath() const
 	return std::string(git_repository_workdir(_pimpl->p));
 }
 
+Commit::Ptr Repository::lookupCommit(OId::Ptr oid) const
+{
+	git_commit *commit = 0;
+	esGitThrow(git_commit_lookup_prefix(&commit, _pimpl->p, oid->constData(), oid->length()));
+	return Commit::Ptr(new Commit(commit));
+}
+
 RevWalk::Ptr Repository::revWalk()
 {
 	git_revwalk *revwalk = nullptr;

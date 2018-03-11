@@ -1,6 +1,5 @@
 #pragma once
 
-#include "esgit/Repository.h"
 #include "esgit/OId.h"
 
 #include <git2.h>
@@ -79,7 +78,7 @@ public:
 	*/
 	std::string typeString() const;
 
-	Repository::Ptr owner() const;
+	//Repository::Ptr owner() const;
 
 	git_object* data() const;
 	const git_object* constData() const;

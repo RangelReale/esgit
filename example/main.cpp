@@ -12,10 +12,14 @@ int main(int argc, char *argv)
 		auto revwalk = repo->revWalk();
 		revwalk->pushHead();
 
-		esgit::OId::Ptr walkoid = revwalk->next();
-		for (; walkoid; walkoid = revwalk->next())
+		esgit::Commit::Ptr walk = revwalk->nextCommit();
+		for (; walk; walk = revwalk->nextCommit())
 		{
-			std::cout << walkoid->format() << std::endl;
+			std::cout << 
+				walk->oid()->format() <<
+				" -- " <<
+				walk->shortMessage() <<
+				std::endl;
 		}
 	}
 	catch (std::exception &e)

@@ -8,13 +8,19 @@ namespace esgit {
 class OId::Private
 {
 public:
-	Private(const git_oid* oid) :
-		p(nullptr)
+	Private(const git_oid* oid, int len) :
+		p(nullptr), len(len)
 	{
 		if (oid != 0)
 		{ 
+			if (this->len < 0)
+				this->len = sizeof(git_oid);
 			p = static_cast<git_oid*>(malloc(sizeof(git_oid)));
 			git_oid_cpy(p, oid);
+		}
+		else
+		{
+			this->len = 0;
 		}
 	}
 
@@ -26,10 +32,11 @@ public:
 
 
 	git_oid *p;
+	int len;
 };
 
-OId::OId(const git_oid* oid)
-    : _pimpl(new Private(oid))
+OId::OId(const git_oid* oid, int len)
+    : _pimpl(new Private(oid, len))
 {
 }
 
@@ -47,7 +54,7 @@ OId::Ptr OId::fromHex(const std::string& hex)
     int len = std::min(hex.size(), static_cast<size_t>(GIT_OID_HEXSZ));
 	git_oid oid;
     esGitThrow(git_oid_fromstrn(&oid, hex.c_str(), len));    
-	return OId::Ptr(new OId(&oid));
+	return OId::Ptr(new OId(&oid, len));
 }
 
 OId::Ptr OId::fromString(const std::string &string)
@@ -57,18 +64,20 @@ OId::Ptr OId::fromString(const std::string &string)
 
 OId::Ptr OId::fromRawData(const std::string& raw)
 {
-    esGitThrow(raw.size() < GIT_OID_HEXSZ);
+	esGitThrow(raw.size() < GIT_OID_HEXSZ);
 	git_oid oid;
 	git_oid_cpy(&oid, reinterpret_cast<const git_oid*>(raw.c_str()));
-	return OId::Ptr(new OId(&oid));
+	return OId::Ptr(new OId(&oid, GIT_OID_HEXSZ));
 }
 
 std::string OId::format() const
 {
-	char *out = static_cast<char*>(malloc(GIT_OID_HEXSZ+1));
-    git_oid_fmt(out, _pimpl->p);
-	out[GIT_OID_HEXSZ] = '\0';
-    return std::string(out);
+	char *out = static_cast<char*>(malloc(_pimpl->len+1));
+	git_oid_nfmt(out, _pimpl->len, _pimpl->p);
+	out[_pimpl->len] = '\0';
+    std::string ret(out);
+	free(out);
+	return ret;
 }
 
 std::string OId::pathFormat() const
@@ -76,7 +85,9 @@ std::string OId::pathFormat() const
 	char *out = static_cast<char*>(malloc(GIT_OID_HEXSZ + 2));
 	git_oid_pathfmt(out, _pimpl->p);
 	out[GIT_OID_HEXSZ+1] = '\0';
-	return std::string(out);
+	std::string ret(out);
+	free(out);
+	return ret;
 }
 
 git_oid* OId::data()
@@ -99,11 +110,9 @@ bool operator !=(const OId &oid1, const OId &oid2)
     return !(operator ==(oid1, oid2));
 }
 
-/*
 int OId::length() const
 {
-    return d.length() * 2;
+	return _pimpl->len;
 }
-*/
 
 }
