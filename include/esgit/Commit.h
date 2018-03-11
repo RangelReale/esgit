@@ -2,6 +2,7 @@
 
 #include "esgit/Object.h"
 #include "esgit/OId.h"
+#include "esgit/Signature.h"
 
 #include "git2.h"
 
@@ -69,12 +70,12 @@ public:
 	/**
 	* Get the committer signature of this commit.
 	*/
-	//Signature committer() const;
+	Signature::Ptr committer() const;
 
 	/**
 	* Get the author signature of this commit.
 	*/
-	//Signature author() const;
+	Signature::Ptr author() const;
 
 	/**
 	* Get the tree pointed to by this commit.

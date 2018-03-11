@@ -38,19 +38,15 @@ int Commit::timeOffset() const
     return git_commit_time_offset(data());
 }
 
-/*
-Signature Commit::committer() const
+Signature::Ptr Commit::committer() const
 {
-    return Signature(git_commit_committer(data()));
+    return Signature::Ptr(new Signature(git_commit_committer(data())));
 }
-*/
 
-/*
-Signature Commit::author() const
+Signature::Ptr Commit::author() const
 {
-    return Signature(git_commit_author(data()));
+    return Signature::Ptr(new Signature(git_commit_author(data())));
 }
-*/
 
 /*
 Tree Commit::tree() const
