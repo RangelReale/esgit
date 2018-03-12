@@ -2,6 +2,7 @@
 
 #include <esgit/DiffDelta.h>
 #include <esgit/Buffer.h>
+#include <esgit/DiffHunk.h>
 
 #include <git2.h>
 
@@ -21,6 +22,9 @@ public:
 	DiffDelta::Ptr delta() const;
 
 	Buffer::Ptr format();
+
+	size_t numHunks() const;
+	DiffHunk::Ptr hunk(size_t index) const;
 
 	git_patch* data() const;
 	const git_patch* constData() const;

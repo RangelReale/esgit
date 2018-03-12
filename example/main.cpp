@@ -71,7 +71,22 @@ int main(int argc, char *argv)
 						}
 					}
 
-					std::cout << patch->format()->asString() << std::endl;
+					for (int h = 0; h < patch->numHunks(); h++)
+					{
+						esgit::DiffHunk::Ptr hunk(patch->hunk(h));
+
+						std::cout << "HUNK: " << hunk->numLines() << " lines" << std::endl;
+
+						for (int hl = 0; hl < hunk->numLines(); hl++)
+						{
+							esgit::DiffLine::Ptr line(hunk->line(hl));
+
+							std::cout << "LINE: " << hl << std::endl;
+							std::cout << std::string(line->data()->content, line->data()->content_len);
+						}
+					}
+
+					//std::cout << patch->format()->asString() << std::endl;
 				}
 
 

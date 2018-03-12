@@ -44,6 +44,18 @@ Buffer::Ptr Patch::format()
 	return buf;
 }
 
+size_t Patch::numHunks() const
+{
+	return git_patch_num_hunks(_pimpl->p);
+}
+
+DiffHunk::Ptr Patch::hunk(size_t index) const
+{
+	const git_diff_hunk *hunk = nullptr;
+	esGitThrow(git_patch_get_hunk(&hunk, nullptr, _pimpl->p, index));
+	return DiffHunk::Ptr(new DiffHunk(_pimpl->p, index, hunk));
+}
+
 git_patch* Patch::data() const
 {
 	return _pimpl->p;

@@ -17,6 +17,8 @@ add_library(esgit STATIC
   DiffDelta.cpp
   DiffFile.cpp
   Patch.cpp
+  DiffHunk.cpp
+  DiffLine.cpp
   Util.cpp
 
   ${INC_DIR}/esgit/ESGit.h
@@ -36,5 +38,7 @@ add_library(esgit STATIC
   ${INC_DIR}/esgit/DiffDelta.h
   ${INC_DIR}/esgit/DiffFile.h
   ${INC_DIR}/esgit/Patch.h
+  ${INC_DIR}/esgit/DiffHunk.h
+  ${INC_DIR}/esgit/DiffLine.h
   ${INC_DIR}/esgit/Util.h
 )
