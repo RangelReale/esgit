@@ -39,12 +39,13 @@ int main(int argc, char *argv)
 				esgit::Diff::Ptr diff = repo->diffTrees(walk->parent(0)->tree(), walk->tree());
 
 
-				std::cout << "DIFF:" << std::endl;
-				std::cout << diff->format(esgit::Diff::Patch)->asString() << std::endl;
+				//std::cout << "DIFF:" << std::endl;
+				//std::cout << diff->format(esgit::Diff::Format_Patch)->asString() << std::endl;
 
 				for (int i = 0; i < diff->numDeltas(); i++)
 				{
 					esgit::DiffDelta::Ptr delta = diff->delta(i);
+					esgit::Patch::Ptr patch = diff->patch(i);
 
 					std::cout << "DIFF DELTA: " << delta->newFile()->path() << std::endl;
 
@@ -69,6 +70,8 @@ int main(int argc, char *argv)
 							break;
 						}
 					}
+
+					std::cout << patch->format()->asString() << std::endl;
 				}
 
 

@@ -40,6 +40,15 @@ DiffDelta::Ptr Diff::delta(size_t index) const
 	return DiffDelta::Ptr(new DiffDelta(git_diff_get_delta(_pimpl->p, index)));
 }
 
+Patch::Ptr Diff::patch(size_t deltaIndex) const
+{
+	git_patch *patch = nullptr;
+	esGitThrow(git_patch_from_diff(&patch, _pimpl->p, deltaIndex));
+
+	return Patch::Ptr(new Patch(patch));
+}
+
+
 Buffer::Ptr Diff::format(Format fmt)
 {
 	Buffer::Ptr buf(new Buffer);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <esgit/DiffDelta.h>
+#include <esgit/Patch.h>
 #include <esgit/Buffer.h>
 
 #include <git2.h>
@@ -18,11 +19,11 @@ public:
 	typedef std::shared_ptr<Diff> Ptr;
 
 	enum Format {
-		Patch = GIT_DIFF_FORMAT_PATCH, /**< full git diff */
-		Header = GIT_DIFF_FORMAT_PATCH_HEADER, /**< just the file headers of patch */
-		Raw = GIT_DIFF_FORMAT_RAW, /**< like git diff --raw */
-		NameOnly = GIT_DIFF_FORMAT_NAME_ONLY, /**< like git diff --name-only */
-		NameStatus = GIT_DIFF_FORMAT_NAME_STATUS /**< like git diff --name-status */
+		Format_Patch = GIT_DIFF_FORMAT_PATCH, /**< full git diff */
+		Format_Header = GIT_DIFF_FORMAT_PATCH_HEADER, /**< just the file headers of patch */
+		Format_Raw = GIT_DIFF_FORMAT_RAW, /**< like git diff --raw */
+		Format_NameOnly = GIT_DIFF_FORMAT_NAME_ONLY, /**< like git diff --name-only */
+		Format_NameStatus = GIT_DIFF_FORMAT_NAME_STATUS /**< like git diff --name-status */
 	};
 
     Diff(git_diff *diff);
@@ -44,6 +45,8 @@ public:
      * @return The \c DiffDelta member.
      */
     DiffDelta::Ptr delta(size_t index) const;
+
+	Patch::Ptr patch(size_t deltaIndex) const;
 
 	Buffer::Ptr format(Format fmt);
 
